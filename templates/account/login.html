@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-center mb-4">{% trans "Connexion" %}</h1>
+
+                <form class="login" method="POST" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label for="id_login">Email:</label>
+                        <input type="email" name="login" class="form-control" placeholder="Email" required id="id_login">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_password">Mot de passe:</label>
+                        <input type="password" name="password" class="form-control" placeholder="Mot de passe" required id="id_password">
+                    </div>
+
+                    {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="submit">{% trans "Se connecter" %}</button>
+                    </div>
+
+                    <div class="mt-3 text-center">
+                        <p>
+                            <a href="{% url 'account_reset_password' %}">{% trans "Mot de passe oublié?" %}</a>
+                        </p>
+                        <p>
+                            {% trans "Pas encore de compte?" %}
+                            <a href="{% url 'account_signup' %}">{% trans "S'inscrire" %}</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

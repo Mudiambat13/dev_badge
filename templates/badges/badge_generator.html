@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Mon Badge - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body text-center">
+                <h2>{{ profile.user.get_full_name|default:profile.user.username }}</h2>
+                {% if qr_code %}
+                    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code LinkedIn" class="mb-3">
+                {% endif %}
+                
+                <div class="tech-icons">
+                    {% for tech in profile.tech_stack.all %}
+                        <img src="{{ tech.icon.url }}" alt="{{ tech.name }}" class="tech-icon m-2" style="width: 32px;">
+                    {% endfor %}
+                </div>
+                
+                <a href="#" class="btn btn-primary mt-3" id="downloadBadge">Télécharger le badge</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

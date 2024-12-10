@@ -1,0 +1,29 @@
+[
+    {
+        "model": "badges.techstack",
+        "pk": 1,
+        "fields": {
+            "name": "React",
+            "category": "FRONTEND",
+            "icon": "tech_icons/react.png"
+        }
+    },
+    {
+        "model": "badges.techstack",
+        "pk": 2,
+        "fields": {
+            "name": "Django",
+            "category": "BACKEND",
+            "icon": "tech_icons/django.png"
+        }
+    },
+    {
+        "model": "badges.techstack",
+        "pk": 3,
+        "fields": {
+            "name": "Python",
+            "category": "LANGUAGE",
+            "icon": "tech_icons/python.png"
+        }
+    }
+] 

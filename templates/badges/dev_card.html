@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Carte */
+        .dev-card {
+            width: 85mm;
+            height: 54mm;
+            background: linear-gradient(135deg, #1a1c2c 0%, #2a2d3e 100%);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            padding: 15px;
+        }
+
+        /* Effet de brillance */
+        .dev-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                rgba(255,255,255,0.1) 0%,
+                rgba(255,255,255,0.05) 50%,
+                transparent 100%
+            );
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        /* Photo de profil */
+        .profile-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #64ffda;
+            object-fit: cover;
+            float: left;
+            margin-right: 15px;
+        }
+
+        /* Informations */
+        .dev-info {
+            margin-left: 75px;
+        }
+
+        .dev-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .dev-title {
+            font-size: 12px;
+            color: #64ffda;
+            margin-bottom: 8px;
+        }
+
+        /* Technologies */
+        .tech-stack {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tech-icon {
+            width: 24px;
+            height: 24px;
+            background: rgba(255,255,255,0.1);
+            padding: 4px;
+            border-radius: 4px;
+        }
+
+        /* QR Code */
+        .qr-code {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Liens sociaux */
+        .social-links {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="dev-card">
+        <img src="{{ profile.get_profile_picture_url }}" class="profile-image" alt="Profile">
+        
+        <div class="dev-info">
+            <h1 class="dev-name">{{ profile.user.get_full_name|default:profile.user.username }}</h1>
+            <div class="dev-title">{{ profile.job_title }}</div>
+            <div class="dev-location">{{ profile.location }}</div>
+        </div>
+
+        {% if profile.linkedin_url %}
+        <img src="data:image/png;base64,{{ qr_code }}" class="qr-code" alt="QR Code">
+        {% endif %}
+
+        <div class="tech-stack">
+            {% for tech in profile.tech_stack.all %}
+            <img src="{{ tech.icon.url }}" class="tech-icon" alt="{{ tech.name }}" title="{{ tech.name }}">
+            {% endfor %}
+        </div>
+
+        <div class="social-links">
+            {% if profile.github_url %}
+            <a href="{{ profile.github_url }}" target="_blank">
+                <img src="{% static 'images/github-icon.png' %}" class="social-icon" alt="GitHub">
+            </a>
+            {% endif %}
+            {% if profile.linkedin_url %}
+            <a href="{{ profile.linkedin_url }}" target="_blank">
+                <img src="{% static 'images/linkedin-icon.png' %}" class="social-icon" alt="LinkedIn">
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html> 
